@@ -1,0 +1,78 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container{
+    flex: 1;
+    padding: 0;
+    margin: 0;
+    max-width: 100% ;
+}
+
+/* Footer */
+.f-info{
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info-socials, .f-info-socials{
+    width: 100%;
+}
+
+.f-info-socials i{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.f-info-links{
+    width: 100%;
+}
+
+/* card */
+.card{
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    height: 30rem;
+    width: 25rem;
+    margin-left: 4rem;
+    margin-bottom: 2rem;
+}
+
+.navbar{
+    max-height: 3rem;
+}
+
+.btns{
+    display: flex;
+}
+
+.content{
+    padding-top: 2rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+.cards{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.new {
+    margin: 30px;
+}

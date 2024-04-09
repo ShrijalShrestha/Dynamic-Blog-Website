@@ -1,0 +1,27 @@
+<% layout("/layouts/boilerplate") %>
+<div class="new">
+    <h3>Create a Blog</h3>
+    <form method="post" action="/home">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="list[title]" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="list[description]" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image URL 1 *</label>
+        <input type="text" name="list[image1]" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image URL 2</label>
+        <input type="text" name="list[image2]" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image URL 3</label>
+        <input type="text" name="list[image3]" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-dark">Create</button>
+    </form>
+</div>
