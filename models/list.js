@@ -6,6 +6,7 @@ const listSchema = new Schema({
         type: String,
         required: true
     },
+    category: String,
     description: String,
     image1: {
         type: String,
