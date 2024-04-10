@@ -30,3 +30,6 @@
   <i><b>Published on - </b></i> <%= new Date().toDateString() %> <br> <br>
   <p style="font-size: 20px; line-height: 25px;"><%= list.description %></p>
 </div>
+<form method="get" action="/edit/<%=list._id%>" style="display: flex; justify-content: center;">
+<button type="submit" class="btn btn-dark mt-3">Edit</button>
+</form>
