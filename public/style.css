@@ -55,7 +55,7 @@ body{
 }
 
 .navbar{
-    max-height: 3rem;
+    min-height: 3rem;
 }
 
 .btns{
@@ -69,10 +69,26 @@ body{
 }
 
 .cards{
-    padding-left: 15px;
-    padding-right: 15px;
+     margin: 0 auto;
 }
 
 .new {
     margin: 30px;
+}
+
+.nav-pills{
+    display: flex;
+    justify-content: center;
+}
+
+.cat{
+    color: black;
+}
+
+.cat:hover{
+    color: black;
+}
+
+.nav-pills .nav-link.active{
+    background-color: rgb(130,227,249);
 }
