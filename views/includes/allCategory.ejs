@@ -1,0 +1,24 @@
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 cards">
+<% for(let list of allListings){ %>
+    <div class="card mt-3" >
+        <img src="<%=list.image1%>" class="card-img-top col" alt="listing_image" style="height:24vh;">
+        <div class="card-body">
+            <p class="card-text">
+                <b style="font-size: 2rem;">
+                    <%= list.title %>
+                </b> <br>
+                <%= list.description.slice(0,250) %>...
+            </p>
+            <div class="btns">
+            <form method="get" action="/blog/<%= list._id %>/show">
+            <button type="submit" class="btn btn-dark">Read More</button>
+            </form>
+            &nbsp;
+            <form method="post" action="/show/<%= list._id %>?_method=DELETE">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+    </div>
+    <% } %>
+</div>
