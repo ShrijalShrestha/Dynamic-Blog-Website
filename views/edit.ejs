@@ -3,26 +3,28 @@
     <h3>Create a Blog</h3>
     <form method="post" action="/show/<%=list._id%>?_method=PUT">
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="list[title]" value="<%=list.title%>" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea name="list[description]" class="form-control"><%=list.description%></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Image URL 1 *</label>
-            <input type="text" name="list[image1]" value="<%=list.image1%>" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Image URL 2</label>
-            <input type="text" name="list[image2]" value="<%=list.image2%>" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Image URL 3</label>
-            <input type="text" name="list[image3]" value="<%=list.image3%>"class="form-control">
-        </div>
-    
-        <button type="submit" class="btn btn-dark">Edit</button>
-    </form>
+    <label for="title" class="form-label">Title</label>
+    <input type="text" name="list[title]" value="<%=list.title%>" class="form-control" required>
 </div>
+<div class="mb-3">
+    <label for="category" class="form-label">Category</label>
+    <input type="text" name="list[category]" value="<%=list.category%>" class="form-control" required>
+</div>
+<div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea name="list[description]" class="form-control"><%=list.description%></textarea>
+</div>
+<div class="mb-3">
+    <label for="image" class="form-label">Image URL 1 *</label>
+    <input type="text" name="list[image1]" value="<%=list.image1%>" class="form-control" required>
+</div>
+<div class="mb-3">
+    <label for="image" class="form-label">Image URL 2</label>
+    <input type="text" name="list[image2]" value="<%=list.image2%>" class="form-control">
+</div>
+<div class="mb-3">
+    <label for="image" class="form-label">Image URL 3</label>
+    <input type="text" name="list[image3]" value="<%=list.image3%>" class="form-control">
+</div>
+<button type="submit" class="btn btn-dark mt-3">Update</button>
+</form>
