@@ -6,10 +6,12 @@
             <div class="card-body">
                 <p class="card-text">
                 <i><b style="color:rgba(12, 15, 11, 0.508);"><%=list.category%></b><br></i>
-                    <b style="font-size: 2rem;">
+                    <b style="font-size: 1rem;">
                         <%= list.title %>
                     </b> <br>
-                    <%= list.description.slice(0,250) %>...
+                    <div class="desc">
+                        <%= list.description%>
+                    </div>
                 </p>
                 <div class="btns">
                 <form method="get" action="/show/<%= list._id %>">
