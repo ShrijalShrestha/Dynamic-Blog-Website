@@ -1,0 +1,29 @@
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 cards">
+    <% for(let list of allListings){ %>
+        <% if(list.category=="Lifestyle"){%>
+        <div class="card mt-3" >
+            <img src="<%=list.image1%>" class="card-img-top col" alt="listing_image" style="height:24vh;">
+            <div class="card-body">
+                <p class="card-text">
+                <i><b style="color:rgba(12, 15, 11, 0.508);"><%=list.category%></b><br></i>
+                    <b style="font-size: 1rem;">
+                        <%= list.title %>
+                    </b> <br>
+                    <div class="desc">
+                        <%= list.description%>
+                    </div>
+                </p>
+                <div class="btns">
+                <form method="get" action="/show/<%= list._id %>">
+                <button type="submit" class="btn btn-dark">Read More</button>
+                </form>
+                &nbsp;
+                <form method="post" action="/show/<%= list._id %>?_method=DELETE">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+        </div>
+        <% } %>
+        <% } %>
+    </div>
