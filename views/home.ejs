@@ -1,52 +1,169 @@
 <% layout("/layouts/boilerplate") %>
 <div id="carouselExampleIndicators" class="carousel slide">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img style="height:40vh; object-fit:cover;" src="https://plus.unsplash.com/premium_photo-1669904022334-e40da006a0a3?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100" alt="blog-image1">
-      </div>
-      <div class="carousel-item">
-        <img style="height:40vh; object-fit:cover;" src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100" alt="blog-image2">
-      </div>
-      <div class="carousel-item">
-        <img style="height:40vh; object-fit:cover;" src="https://media.istockphoto.com/id/1130150680/photo/blog-and-information-website-concept-workplace-background-with-text.jpg?s=612x612&w=0&k=20&c=BtknpmORYmgMHN5Qty7N0o5mvsk204BG-q4oR8gFl_g=" class="d-block w-100" alt="blog-image3">
-      </div>
-    </div>
-    <div class="card-img-overlay mt-5" style="text-align: center;">
-      <img  src="https://www.pngkit.com/png/full/357-3570726_blog-word-blog.png">
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="1"
+      aria-label="Slide 2"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="2"
+      aria-label="Slide 3"
+    ></button>
   </div>
-  <ul class="nav nav-pills mt-4" id="pills-tab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active cat" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><b>ALL</b></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link cat" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><b>TECH</b></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link cat" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><b>FOOD</b></button>
-    </li>
-  </ul>
-  <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-      <%- include('includes/allCategory.ejs') -%>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        style="height: 45vh; object-fit: cover"
+        src="https://plus.unsplash.com/premium_photo-1669904022334-e40da006a0a3?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        class="d-block w-100"
+        alt="blog-image1"
+      />
     </div>
-    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-      <%- include('includes/techCategory.ejs') -%>
+    <div class="carousel-item">
+      <img
+        style="height: 45vh; object-fit: cover"
+        src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        class="d-block w-100"
+        alt="blog-image2"
+      />
     </div>
-    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-      <%- include('includes/foodCategory.ejs') -%>
+    <div class="carousel-item">
+      <img
+        style="height: 45vh; object-fit: cover"
+        src="https://jumpseller.com/images/learn/create-a-blog/blog.jpg"
+        class="d-block w-100"
+        alt="blog-image3"
+      />
     </div>
   </div>
+  <div class="card-img-overlay mt-5" style="text-align: center">
+    <img src="https://www.pngkit.com/png/full/357-3570726_blog-word-blog.png" />
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleIndicators"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleIndicators"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<ul class="nav nav-pills mt-4" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link active cat"
+      id="pills-home-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#pills-home"
+      type="button"
+      role="tab"
+      aria-controls="pills-home"
+      aria-selected="true"
+    >
+      <b>ALL</b>
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link cat"
+      id="pills-profile-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#pills-profile"
+      type="button"
+      role="tab"
+      aria-controls="pills-profile"
+      aria-selected="false"
+    >
+      <b>TECH</b>
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link cat"
+      id="pills-contact-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#pills-contact"
+      type="button"
+      role="tab"
+      aria-controls="pills-contact"
+      aria-selected="false"
+    >
+      <b>FOOD</b>
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link cat"
+      id="pills-life-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#pills-life"
+      type="button"
+      role="tab"
+      aria-controls="pills-life"
+      aria-selected="false"
+    >
+      <b>LIFESTYLE</b>
+    </button>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div
+    class="tab-pane fade show active"
+    id="pills-home"
+    role="tabpanel"
+    aria-labelledby="pills-home-tab"
+    tabindex="0"
+  >
+    <%- include('includes/allCategory.ejs') -%>
+  </div>
+  <div
+    class="tab-pane fade"
+    id="pills-profile"
+    role="tabpanel"
+    aria-labelledby="pills-profile-tab"
+    tabindex="0"
+  >
+    <%- include('includes/techCategory.ejs') -%>
+  </div>
+  <div
+    class="tab-pane fade"
+    id="pills-contact"
+    role="tabpanel"
+    aria-labelledby="pills-contact-tab"
+    tabindex="0"
+  >
+    <%- include('includes/foodCategory.ejs') -%>
+  </div>
+
+  <div
+    class="tab-pane fade"
+    id="pills-life"
+    role="tabpanel"
+    aria-labelledby="pills-life-tab"
+    tabindex="0"
+  >
+    <%- include('includes/lifestyle.ejs') -%>
+  </div>
+</div>
