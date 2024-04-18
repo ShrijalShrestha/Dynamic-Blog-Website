@@ -60,26 +60,15 @@ body{
     margin-bottom: 2rem;
 }
 
-<<<<<<< HEAD
 .cards{
     margin: 0 auto;
-=======
+}
 .desc {
     max-height: 120px; /* Adjust max-height as needed */
     overflow: hidden;
 }
 .navbar{
     min-height: 3rem;
->>>>>>> 04ae69165670f1676143139511a8783343936d63
-}
-
-.card-img-overlay {
-    text-align: center;
-}
-
-.card-img-overlay img{
-    height: 30vmin;
-    width: 30vmax;
 }
 
 /* Description */
@@ -87,8 +76,6 @@ body{
     max-height: 120px; /* Adjust max-height as needed */
     overflow: hidden;
 }
-
-
 
 /* NavBar */
 .navbar{
