@@ -36,9 +36,9 @@ const list = [
 
 const user = [
     {
-        name: "Shrijal Shrestha",
-        email: "shrijal_shrestha@srmap.edu.in",
-        password: "Shrijal@123"
+        name: "",
+        email: "",
+        password: ""
     }
 ];
 
