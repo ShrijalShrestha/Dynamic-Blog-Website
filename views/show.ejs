@@ -1,4 +1,6 @@
 <% layout("/layouts/boilerplate") %>
+<%- include('includes/navbar.ejs') -%>
+<div class="show">
 <div id="carouselExampleIndicators" class="carousel slide">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -7,13 +9,13 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img style="height:40vh; object-fit:cover;" src="<%=list.image1%>" class="d-block w-100" alt="blog-image1">
+      <img style="height:45vh; object-fit:cover;" src="<%=list.image1%>" class="d-block w-100" alt="blog-image1">
     </div>
     <div class="carousel-item">
-      <img style="height:40vh; object-fit:cover;" src="<%=list.image2%>" class="d-block w-100" alt="blog-image2">
+      <img style="height:45vh; object-fit:cover;" src="<%=list.image2%>" class="d-block w-100" alt="blog-image2">
     </div>
     <div class="carousel-item">
-      <img style="height:40vh; object-fit:cover;" src="<%=list.image3%>" class="d-block w-100" alt="blog-image3">
+      <img style="height:45vh; object-fit:cover;" src="<%=list.image3%>" class="d-block w-100" alt="blog-image3">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -28,8 +30,6 @@
 <div class="content">
   <h1 style="font-size: 50px;"><b><%= list.title %></b> <br></h1>
   <i><b>Published on - </b></i> <%= new Date().toDateString() %> <br> <br>
-  <p style="font-size: 20px; line-height: 25px;"><%= list.description %></p>
+  <p style="font-size: 20px; line-height: 25px; white-space: pre-wrap;"><%= list.description %></p>
 </div>
-<form method="get" action="/edit/<%=list._id%>" style="display: flex; justify-content: center;">
-<button type="submit" class="btn btn-dark mt-3">Edit</button>
-</form>
+</div>

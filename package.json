@@ -3,7 +3,10 @@
     "ejs": "^3.1.9",
     "ejs-mate": "^4.0.0",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "method-override": "^3.0.0",
-    "mongoose": "^8.3.1"
+    "mongoose": "^8.3.1",
+    "mysql2": "^3.9.4",
+    "nodemon": "^3.1.0"
   }
 }

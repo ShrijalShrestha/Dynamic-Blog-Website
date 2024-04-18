@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const List = require("../models/list.js");
+const Users = require("../models/user.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/blog";
 
@@ -19,6 +20,8 @@ async function main() {
 const initDB = async () => {
   await List.deleteMany({});
   await List.insertMany(initData.data);
+  await Users.deleteMany({});
+  await Users.insertMany(initData.user);
   console.log("data was initialized");
 };
 

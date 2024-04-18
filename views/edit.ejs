@@ -1,4 +1,5 @@
 <% layout("/layouts/boilerplate") %>
+<%- include('includes/navbar.ejs') -%>
 <div class="new">
     <h3>Create a Blog</h3>
     <form method="post" action="/show/<%=list._id%>?_method=PUT">
@@ -8,7 +9,31 @@
 </div>
 <div class="mb-3">
     <label for="category" class="form-label">Category</label>
-    <input type="text" name="list[category]" value="<%=list.category%>" class="form-control" required>
+    <div class="dropdown">
+        <select class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" name="list[category]">
+            <option value="Tech">
+                Tech
+            </option>
+            <option value="Food">
+                Food
+            </option>
+            <option value="Travel">
+                Travel
+            </option>
+            <option value="Lifestyle">
+                Lifestyle
+            </option>
+            <option value="Health and Fitness">
+                Health and Fitness
+            </option>
+            <option value="Business">
+                Business
+            </option>
+            <option value="Fashion and Beauty">
+                Fashion and Beauty
+            </option>
+        </select>
+    </div>
 </div>
 <div class="mb-3">
     <label for="description" class="form-label">Description</label>

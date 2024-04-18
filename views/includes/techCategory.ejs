@@ -2,24 +2,36 @@
     <% for(let list of allListings){ %>
         <% if(list.category=="Tech"){%>
         <div class="card mt-3" >
-            <img src="<%=list.image1%>" class="card-img-top col" alt="listing_image" style="height:24vh;">
+            <img src="<%=list.image1%>" class="card-img-top col" alt="listing_image" style="height:29vh;">
             <div class="card-body">
                 <p class="card-text">
                 <i><b style="color:rgba(12, 15, 11, 0.508);"><%=list.category%></b><br></i>
-                    <b style="font-size: 2rem;">
-                        <%= list.title %>
+                    <b style="font-size: 1rem;">
+                        <% if(list.title.length > 43) { %>
+                            <%= list.title.substring(0, 43) %>..
+                          <% } else { %>
+                            <%= list.title %>
+                          <% } %>
                     </b> <br>
-                    <%= list.description.slice(0,250) %>...
+                    <div class="desc">
+                        <%= list.description%>
+                    </div>
                 </p>
                 <div class="btns">
-                <form method="get" action="/show/<%= list._id %>">
-                <button type="submit" class="btn btn-dark">Read More</button>
-                </form>
-                &nbsp;
-                <form method="post" action="/show/<%= list._id %>?_method=DELETE">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-              </div>
+                  <form method="get" action="/show/<%= list._id %>">
+                  <button type="submit" class="btn btn-dark">Read More</button>
+                  </form>
+                  &nbsp;
+                  <% if(isLoggedIn) { %>
+                    <form method="post" action="/show/<%= list._id %>?_method=DELETE">
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    &nbsp;
+                    <form method="get" action="/edit/<%=list._id%>">
+                      <button type="submit" class="btn btn-warning">Edit</button>
+                    </form>
+                  <% } %>
+                </div>
             </div>
         </div>
         <% } %>
