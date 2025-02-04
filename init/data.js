@@ -32,7 +32,7 @@ const list = [
         description: "Generative AI, or GenAI, is a type of artificial intelligence that uses user prompts to create new content like text, images, videos, sounds, code, 3D designs, and more. GenAI models combine AI algorithms to process content. For example, natural language processing techniques can transform characters into sentences, parts of speech, entities, and actions. GenAI is trained on documents and artifacts that already exist online. The goal is to produce content that has an understanding of humanlike concepts. For example, GenAI systems can be used to develop synthetic data as an alternative to data produced by real-world events. This data can be used to validate mathematical models and train machine learning models while preserving user privacy. GenAI is powered by foundation models, which are large AI models that can multi-task and perform out-of-the-box tasks, including summarization, Q&A, classification, and more. Foundation models can be adapted for targeted use cases with very little example data.",   
         image1:"https://www.ibm.com/blog/wp-content/uploads/2023/03/What-is-Generative-AI-what-are-Foundation-Models-and-why-do-they-matter-scaled.jpg",
         image2:"https://cdn.analyticsvidhya.com/wp-content/uploads/2024/03/Generative-AI-course.jpg",
-        image3:"https://media.istockphoto.com/id/2164746643/photo/artificial-intelligence-idea-ai-light-bulb-idea-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=KTvfhRU02UKpS4ZOMxk_LWcu231G3f1iTiW2EICJkWY="
+        image3:"https://www.netscribes.com/wp-content/uploads/2023/08/Generative-AI-in-Healthcare.jpg"
 
     }
 ];
