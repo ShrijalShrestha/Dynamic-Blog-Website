@@ -1,9 +1,10 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const List = require("../models/list.js");
 const Users = require("../models/user.js");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/blog";
+const MONGO_URL = process.env.MONGO_URL;
 
 main()
   .then(() => {

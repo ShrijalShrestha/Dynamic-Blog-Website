@@ -1,15 +1,19 @@
+require("dotenv").config();
 const express = require("express");
 const session = require('express-session');
-const app = express();
-const port = 8080;
-const mongoose = require("mongoose");
 const List = require("./models/list.js");
 const User = require("./models/user.js");
+
+const app = express();
+const port = process.env.PORT;
+
+const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const bcrypt = require('bcrypt');
 
-let M_url = "mongodb://127.0.0.1:27017/blog";
+let M_url = process.env.MONGO_URL;
 
 main()
     .then(() => {
@@ -30,20 +34,20 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
+
+// Apply the session middleware
+app.use(session({
+    secret: process.env.SECRET_KEY, // Change this to your own secret key
+    resave: false,
+    saveUninitialized: true
+}));
+
 // Middleware function to check if the user is logged in
 const checkLoggedIn = (req, res, next) => {
-    // Check if isLoggedIn property is set in the session
     const isLoggedIn = req.session.isLoggedIn || false;
     req.isLoggedIn = isLoggedIn;
     next();
 };
-
-// Apply the session middleware
-app.use(session({
-    secret: 'your-secret-key', // Change this to your own secret key
-    resave: false,
-    saveUninitialized: true
-}));
 
 // Apply the checkLoggedIn middleware globally to all routes
 app.use(checkLoggedIn);
@@ -60,13 +64,17 @@ app.get('/', (req, res) => {
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await User.findOne({ email: `${email}`, password: `${password}` });
+        const user = await User.findOne({ email });
         if (user) {
-            // If login successful, set isLoggedIn to true in the request object
-            req.isLoggedIn = true;
-            // Set a session variable or cookie to maintain login state across requests
-            req.session.isLoggedIn = true; // Example for using session (assuming you are using express-session)
-            res.redirect("/admin");
+            // Compare the provided password with the hashed password
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (isMatch) {
+                req.isLoggedIn = true;
+                req.session.isLoggedIn = true;
+                res.redirect("/admin");
+            } else {
+                res.render("login.ejs", { error: { msg: "Incorrect email or password" } });
+            }
         } else {
             res.render("login.ejs", { error: { msg: "Incorrect email or password" } });
         }
@@ -81,10 +89,47 @@ app.get("/login", (req, res) => {
     res.render("login.ejs", { error });
 });
 
+// register route
+app.post("/register", async (req, res) => {
+    const { username, email, password } = req.body;
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.render("register.ejs", { error: { msg: "Email already in use." } });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({
+            name: username,
+            email: email,
+            password: hashedPassword,
+        });
+        await newUser.save(); // Use save() method to insert the document
+
+        if (newUser) {
+            req.isLoggedIn = true;
+            req.session.isLoggedIn = true;
+            res.redirect("/admin");
+        } else {
+            res.render("register.ejs", { error: { msg: "Registration failed. Please try again." } });
+        }
+    } catch (err) {
+        console.error(err);
+        res.render("register.ejs", { error: { msg: "An error occurred. Please try again later." } });
+    }
+});
+
+app.get("/register", (req, res) => {
+    let error = req.query.error;
+    res.render("register.ejs", { error });
+});
+
 //home route
 app.get('/home', async (req, res) => {
     const allListings = await List.find({});
-    res.render("home.ejs", { allListings, isLoggedIn: req.isLoggedIn})
+    res.render("home.ejs", { allListings, isLoggedIn: req.isLoggedIn })
 })
 
 // new route
@@ -116,7 +161,7 @@ app.post('/admin', async (req, res) => {
 app.get('/show/:id', async (req, res) => {
     const { id } = req.params;
     const list = await List.findById(id);
-    res.render("show.ejs", { list , isLoggedIn: req.isLoggedIn })
+    res.render("show.ejs", { list, isLoggedIn: req.isLoggedIn })
 })
 
 //delete route
@@ -130,7 +175,7 @@ app.delete('/show/:id', async (req, res) => {
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
     const list = await List.findById(id);
-    res.render('edit.ejs', { list , isLoggedIn: req.isLoggedIn });
+    res.render('edit.ejs', { list, isLoggedIn: req.isLoggedIn });
 });
 
 //update
