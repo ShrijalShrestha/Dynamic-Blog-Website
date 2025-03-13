@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 const bcrypt = require("bcrypt");
 
 const list = [
@@ -36,13 +36,23 @@ const list = [
 
     }
 ];
-const hashedPassword = await bcrypt.hash(process.env.PASSWORD, 10);
-const user = [
-    {
-        name: process.env.ADMIN_NAME,
-        email: process.env.ADMIN_EMAIL,
-        password: hashedPassword,
-    }
-];
 
-module.exports = { data: list, user};
+async function createUser() {
+    const hashedPassword = await bcrypt.hash(process.env.PASSWORD, 10);
+    
+    const user = [
+        {
+            name: process.env.ADMIN_NAME,
+            email: process.env.ADMIN_EMAIL,
+            password: hashedPassword,
+        }
+    ];
+
+    return user;
+}
+
+// Exporting data as a promise
+module.exports = {
+    data: list,  // Assuming you have a list to export
+    user: createUser() // This will be a Promise
+};

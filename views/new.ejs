@@ -2,7 +2,7 @@
 <%- include('includes/navbar.ejs') -%>
 <div class="new">
   <h3>Create a Blog</h3>
-  <form method="post" action=<%= isLoggedIn ? '/admin' : '/home' %>>
+  <form method="post" action="/home">
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
       <input type="text" name="list[title]" class="form-control" required />

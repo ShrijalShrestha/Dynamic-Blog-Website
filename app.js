@@ -1,31 +1,20 @@
 require("dotenv").config();
 const express = require("express");
-const session = require('express-session');
+const session = require("express-session");
 const List = require("./models/list.js");
 const User = require("./models/user.js");
-
-const app = express();
-const port = process.env.PORT;
-
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
-let M_url = process.env.MONGO_URL;
+const app = express();
+const port = process.env.PORT;
 
-main()
-    .then(() => {
-        console.log("M is connected");
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-
-async function main() {
-    await mongoose.connect(M_url);
-}
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => console.log("Mongoose connected"))
+    .catch(err => console.error(err));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -34,157 +23,139 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
-
-// Apply the session middleware
+//  Session Middleware
 app.use(session({
-    secret: process.env.SECRET_KEY, // Change this to your own secret key
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true
 }));
 
-// Middleware function to check if the user is logged in
-const checkLoggedIn = (req, res, next) => {
-    const isLoggedIn = req.session.isLoggedIn || false;
-    req.isLoggedIn = isLoggedIn;
+//  Middleware to Set Global Variables for EJS
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = !!req.session.userId;
+    res.locals.userId = req.session.userId || null;
     next();
-};
-
-// Apply the checkLoggedIn middleware globally to all routes
-app.use(checkLoggedIn);
-
-
-// root
-app.get('/', (req, res) => {
-    res.send("Welcome to the homepage");
 });
 
-// Middleware function to check if the user is logged in
+//  Root Route
+app.get("/", (req, res) => res.send("Welcome to the homepage"));
 
-// login route
+//  Login Route
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
-        if (user) {
-            // Compare the provided password with the hashed password
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (isMatch) {
-                req.isLoggedIn = true;
-                req.session.isLoggedIn = true;
-                res.redirect("/admin");
-            } else {
-                res.render("login.ejs", { error: { msg: "Incorrect email or password" } });
-            }
-        } else {
-            res.render("login.ejs", { error: { msg: "Incorrect email or password" } });
+        if (user && await bcrypt.compare(password, user.password)) {
+            req.session.userId = user._id;
+            return res.redirect("/home");
         }
+        res.render("login.ejs", { error: { msg: "Incorrect email or password" } });
     } catch (err) {
         console.error(err);
-        res.render("login.ejs", { error: { msg: "An error occurred. Please try again later." } });
+        res.render("login.ejs", { error: { msg: "An error occurred. Try again." } });
     }
 });
 
-app.get("/login", (req, res) => {
-    let error = req.query.error;
-    res.render("login.ejs", { error });
-});
+app.get("/login", (req, res) => res.render("login.ejs", { error: req.query.error }));
 
-// register route
+//  Register Route
 app.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
     try {
-        // Check if user already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
+        if (await User.findOne({ email })) {
             return res.render("register.ejs", { error: { msg: "Email already in use." } });
         }
-
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({
-            name: username,
-            email: email,
-            password: hashedPassword,
-        });
-        await newUser.save(); // Use save() method to insert the document
-
-        if (newUser) {
-            req.isLoggedIn = true;
-            req.session.isLoggedIn = true;
-            res.redirect("/admin");
-        } else {
-            res.render("register.ejs", { error: { msg: "Registration failed. Please try again." } });
-        }
+        const newUser = await User.create({ name: username, email, password: hashedPassword });
+        req.session.userId = newUser._id;
+        res.redirect("/home");
     } catch (err) {
         console.error(err);
-        res.render("register.ejs", { error: { msg: "An error occurred. Please try again later." } });
+        res.render("register.ejs", { error: { msg: "An error occurred. Try again." } });
     }
 });
 
-app.get("/register", (req, res) => {
-    let error = req.query.error;
-    res.render("register.ejs", { error });
+app.get("/register", (req, res) => res.render("register.ejs", { error: req.query.error }));
+
+//  Logout Route
+app.get("/logout", (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/login");
+    });
 });
 
-//home route
-app.get('/home', async (req, res) => {
-    const allListings = await List.find({});
-    res.render("home.ejs", { allListings, isLoggedIn: req.isLoggedIn })
-})
+//  Middleware to Require Login
+const requireLogin = (req, res, next) => {
+    if (!req.session.userId) return res.redirect("/login");
+    next();
+};
 
-// new route
-app.get('/new', (req, res) => {
-    res.render("new.ejs", { isLoggedIn: req.isLoggedIn });
-})
-
-// admin route
-app.get('/admin', async (req, res) => {
-    const allListings = await List.find({});
-    res.render("admin.ejs", { allListings, isLoggedIn: req.isLoggedIn });
+//  Home Route (Shows All Listings)
+app.get("/home", async (req, res) => {
+    try {
+        const allListings = await List.find({}).populate("owner");
+        res.render("home.ejs", { allListings });
+    } catch (err) {
+        console.error("Error fetching listings:", err);
+        res.status(500).send("Error loading listings.");
+    }
 });
 
+//  New Listing Page (Requires Login)
+app.get("/new", requireLogin, (req, res) => {
+    res.render("new.ejs");
+});
 
-// create route
-app.post('/home', async (req, res) => {
-    const newBlog = new List(req.body.list);
-    await newBlog.save();
+//  Create New Listing (Only if Logged In)
+app.post("/home", requireLogin, async (req, res) => {
+    await new List({ ...req.body.list, owner: req.session.userId }).save();
     res.redirect("/home");
-})
-
-app.post('/admin', async (req, res) => {
-    const newBlog = new List(req.body.list);
-    await newBlog.save();
-    res.redirect("/admin");
-})
-
-// read more route
-app.get('/show/:id', async (req, res) => {
-    const { id } = req.params;
-    const list = await List.findById(id);
-    res.render("show.ejs", { list, isLoggedIn: req.isLoggedIn })
-})
-
-//delete route
-app.delete('/show/:id', async (req, res) => {
-    let { id } = req.params;
-    await List.findByIdAndDelete(id);
-    res.redirect("/home");
-})
-
-// edit post
-app.get('/edit/:id', async (req, res) => {
-    const { id } = req.params;
-    const list = await List.findById(id);
-    res.render('edit.ejs', { list, isLoggedIn: req.isLoggedIn });
 });
 
-//update
-app.put('/show/:id', async (req, res) => {
-    const { id } = req.params;
-    await List.findByIdAndUpdate(id, { ...req.body.list });
-    res.redirect(`/show/${id}`);
-})
+//  Profile Page (User's Listings Only)
+app.get("/profile", requireLogin, async (req, res) => {
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user) return res.status(404).send("User not found");
 
-app.listen(port, () => {
-    console.log(`app is listening to port ${port}`);
-})
+        const userPosts = await List.find({ owner: req.session.userId }).populate("owner");
+        res.render("profile.ejs", { user, userPosts });
+    } catch (err) {
+        console.error("Error fetching profile:", err);
+        res.status(500).send("Error loading profile");
+    }
+});
+
+//  Show Specific Listing
+app.get("/show/:id", async (req, res) => {
+    const list = await List.findById(req.params.id).populate("owner");
+    res.render("show.ejs", { list });
+});
+
+//  Delete Listing (Only if User Owns It)
+app.delete("/show/:id", requireLogin, async (req, res) => {
+    const list = await List.findById(req.params.id);
+    if (!list || list.owner.toString() !== req.session.userId) return res.redirect("/home");
+
+    await List.findByIdAndDelete(req.params.id);
+    res.redirect("/home");
+});
+
+//  Edit Listing (Only if User Owns It)
+app.get("/edit/:id", requireLogin, async (req, res) => {
+    const list = await List.findById(req.params.id);
+    if (!list || list.owner.toString() !== req.session.userId) return res.redirect("/home");
+
+    res.render("edit.ejs", { list });
+});
+
+//  Update Listing (Only if User Owns It)
+app.put("/show/:id", requireLogin, async (req, res) => {
+    const list = await List.findById(req.params.id);
+    if (!list || list.owner.toString() !== req.session.userId) return res.redirect("/home");
+
+    await List.findByIdAndUpdate(req.params.id, { ...req.body.list });
+    res.redirect(`/show/${req.params.id}`);
+});
+
+app.listen(port, () => console.log(`App listening on port ${port}`));
