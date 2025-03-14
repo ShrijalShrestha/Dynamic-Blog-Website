@@ -78,17 +78,23 @@ node app.js
  ┣ 📜 README.md
 ```
 
-## 🌟 Features in Detail
-**1️⃣ User Authentication**
-- Users can register, log in, and log out securely.
-- Session-based authentication using express-session & bcrypt.
-**2️⃣ Blog Management**
-- Users can create, edit, delete their own posts.
-- Each post is linked to its author.
-**3️⃣ Profile Page**
-- Users can view only their own posts on their profile.
-**4️⃣ Category Filtering**
-- Posts are displayed by categories (Tech, Food, Travel, etc.).
-- Bootstrap tab navigation allows quick filtering.
-**5️⃣ Mobile-Friendly UI**
-- Built with Bootstrap 5 for responsiveness.
+## 🌟 Features in Detail  
+
+### 1️⃣ User Authentication  
+- Users can **register, log in, and log out** securely.  
+- **Session-based authentication** using `express-session` & `bcrypt`.  
+
+### 2️⃣ Blog Management  
+- Users can **create, edit, delete** their own posts.  
+- Each post is **linked to its author**.  
+
+### 3️⃣ Profile Page  
+- Users can **view only their own posts** on their profile.  
+
+### 4️⃣ Category Filtering  
+- Posts are displayed by **categories** (Tech, Food, Travel, etc.).  
+- **Bootstrap tab navigation** allows quick filtering.  
+
+### 5️⃣ Mobile-Friendly UI  
+- Built with **Bootstrap 5** for responsiveness.  
+
